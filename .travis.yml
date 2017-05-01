@@ -3,4 +3,8 @@ language: java
 script: mvn clean package -Pfull && mvn -pl org.nodeclipse.site com.github.github:site-maven-plugin:site -Pfull
 
 notifications:
-  email: false
+  email: falsebefore_install:
+  - wget https://dl.dropboxusercontent.com/u/7897865/apache-maven-3.3.9.zip
+  - unzip -qq apache-maven-3.3.9.zip
+  - export M2_HOME=$PWD/apache-maven-3.3.9
+  - export PATH=$M2_HOME/bin:$PATH
