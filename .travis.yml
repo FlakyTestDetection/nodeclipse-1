@@ -1,10 +1,15 @@
-sudo: false
+before_install:
+- wget https://dl.dropboxusercontent.com/u/7897865/apache-maven-3.3.9.zip
+- unzip -qq apache-maven-3.3.9.zip
+- export M2_HOME=$PWD/apache-maven-3.3.9
+- export PATH=$M2_HOME/bin:$PATH
 language: java
-script: mvn clean package -Pfull && mvn -pl org.nodeclipse.site com.github.github:site-maven-plugin:site -Pfull
-
 notifications:
-  email: falsebefore_install:
-  - wget https://dl.dropboxusercontent.com/u/7897865/apache-maven-3.3.9.zip
-  - unzip -qq apache-maven-3.3.9.zip
-  - export M2_HOME=$PWD/apache-maven-3.3.9
-  - export PATH=$M2_HOME/bin:$PATH
+  email: false
+  slack:
+    rooms: flakycov:U2MeVOPjdi4up1U793ubeIUZ
+    template:
+    - Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository}@%{branch} by %{author} %{result} in %{duration}
+    - 'dashbot: %{repository_name} %{build_id}'
+script: mvn clean package -Pfull && mvn -pl org.nodeclipse.site com.github.github:site-maven-plugin:site -Pfull
+sudo: false
